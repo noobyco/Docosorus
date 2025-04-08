@@ -1054,8 +1054,13 @@ def convert_docx_to_pdf(docx_path, pdf_path):
         logger.error(f"PDF conversion error: {str(e)}")
         return False
 
+
 @app.route("/", methods=["GET"])
 def index():
+    if os.path.exists(OUTPUT_FOLDER):
+        shutil.rmtree(OUTPUT_FOLDER)
+    # Recreate the output folder for future use.
+    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
     return render_template("index.html")
 
 @app.route("/upload", methods=["POST"])
