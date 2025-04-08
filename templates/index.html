@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --primary-hover: #4338CA;
+            --secondary-color: #111928;
+            --accent-color: #10B981;
+            --light-bg: #F9FAFB;
+            --dark-bg: #111928;
+            --light-card: #FFFFFF;
+            --dark-card: #1F2937;
+            --light-text: #111928;
+            --dark-text: #F9FAFB;
+            --light-border: #E5E7EB;
+            --dark-border: #374151;
+            --light-input: #F9FAFB;
+            --dark-input: #374151;
+        }
+        
+        [data-bs-theme="light"] {
+            --bg-color: var(--light-bg);
+            --card-bg: var(--light-card);
+            --text-color: var(--light-text);
+            --border-color: var(--light-border);
+            --input-bg: var(--light-input);
+        }
+        
+        [data-bs-theme="dark"] {
+            --bg-color: var(--dark-bg);
+            --card-bg: var(--dark-card);
+            --text-color: var(--dark-text);
+            --border-color: var(--dark-border);
+            --input-bg: var(--dark-input);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container-fluid {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 0;
+            flex: 1;
+        }
+        
+        .app-header {
+            padding: 1rem 0 2rem;
+        }
+        
+        .theme-toggle {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .theme-toggle:hover {
+            background-color: var(--input-bg);
+        }
+        
+        .app-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .app-subtitle {
+            font-weight: 400;
+            color: #6B7280;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--text-color);
+            margin-bottom: 0;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.25);
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+        
+        .progress {
+            height: 0.5rem;
+            border-radius: 1rem;
+            background-color: var(--border-color);
+            margin-top: 1rem;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 1rem;
+            transition: width 0.5s ease;
+        }
+        
+        .features-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-card {
+            flex: 1;
+            min-width: 300px;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .feature-content h3 {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-content p {
+            font-size: 0.9rem;
+            color: #6B7280;
+            margin-bottom: 0;
+        }
+        
+        .file-upload-container {
+            padding: 1.5rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s;
+            background-color: var(--bg-color);
+        }
+        
+        .file-upload-container:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: #6B7280;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        #processingStatus {
+            display: none;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .spinner-border {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 2rem;
+            }
+            
+            .feature-card {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <header class="app-header d-flex justify-content-between align-items-start">
+            <div>
+                <h1 class="app-title">Docosorus</h1>
+                <p class="app-subtitle">Generate customized documents from templates and data</p>
+            </div>
+            <div class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+                <i class="bi bi-moon-fill"></i>
+            </div>
+        </header>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title">Upload Files</h5>
+            </div>
+            <div class="card-body">
+                <form id="uploadForm" enctype="multipart/form-data" method="post">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="excel_file" class="form-label">Excel Data File</label>
+                            <div class="file-upload-container" id="excelUploadContainer">
+                                <div class="upload-icon">
+                                    <i class="bi bi-file-earmark-excel"></i>
+                                </div>
+                                <h5>Choose Excel File</h5>
+                                <p class="text-muted">Upload your data in .xlsx or .xls format</p>
+                                <input type="file" class="form-control" id="excel_file" name="excel_file" accept=".xlsx, .xls" required hidden>
+                                <button type="button" class="btn btn-outline-primary mt-2" id="excelSelectBtn">
+                                    <i class="bi bi-upload me-2"></i> Select File
+                                </button>
+                                <div id="excelFileInfo" class="mt-3" style="display: none;">
+                                    <span class="badge bg-success p-2"><i class="bi bi-check-circle me-1"></i> <span id="excelFileName"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <label for="template_file" class="form-label">Word Template</label>
+                            <div class="file-upload-container" id="templateUploadContainer">
+                                <div class="upload-icon">
+                                    <i class="bi bi-file-earmark-word"></i>
+                                </div>
+                                <h5>Choose Word Template</h5>
+                                <p class="text-muted">Upload your template in .docx format</p>
+                                <input type="file" class="form-control" id="template_file" name="template_file" accept=".docx" required hidden>
+                                <button type="button" class="btn btn-outline-primary mt-2" id="templateSelectBtn">
+                                    <i class="bi bi-upload me-2"></i> Select File
+                                </button>
+                                <div id="templateFileInfo" class="mt-3" style="display: none;">
+                                    <span class="badge bg-success p-2"><i class="bi bi-check-circle me-1"></i> <span id="templateFileName"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 col-md-6 mx-auto mt-3">
+                        <button type="submit" class="btn btn-primary btn-lg" id="generateBtn">
+                            <i class="bi bi-magic me-2"></i> Generate Documents
+                        </button>
+                    </div>
+                    
+                    <div id="processingStatus">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <span id="statusText">Processing your documents...</span>
+                        <div class="progress mt-3">
+                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="bi bi-lightning-charge"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Fast Processing</h3>
+                    <p>Generate multiple documents in seconds with our optimized engine.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="bi bi-file-earmark-pdf"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Multiple Formats</h3>
+                    <p>Get your documents in both Word and PDF formats automatically.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Secure Processing</h3>
+                    <p>Your data is processed securely and deleted after completion.</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><small>Document Generator © 2025 | Your files are processed securely</small></p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for saved theme preference or use default
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+            
+            // Theme toggle button
+            document.getElementById('themeToggle').addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+            
+            // File input handling
+            document.getElementById('excelSelectBtn').addEventListener('click', function() {
+                document.getElementById('excel_file').click();
+            });
+            
+            document.getElementById('templateSelectBtn').addEventListener('click', function() {
+                document.getElementById('template_file').click();
+            });
+            
+            document.getElementById('excel_file').addEventListener('change', function(e) {
+                const fileName = e.target.files[0]?.name || 'No file selected';
+                document.getElementById('excelFileName').textContent = fileName;
+                document.getElementById('excelFileInfo').style.display = 'block';
+            });
+            
+            document.getElementById('template_file').addEventListener('change', function(e) {
+                const fileName = e.target.files[0]?.name || 'No file selected';
+                document.getElementById('templateFileName').textContent = fileName;
+                document.getElementById('templateFileInfo').style.display = 'block';
+            });
+            
+            // Form submission with progress
+            document.getElementById('uploadForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                // Show processing status
+                document.getElementById('generateBtn').disabled = true;
+                document.getElementById('processingStatus').style.display = 'block';
+                
+                // Simulate progress
+                let progress = 0;
+                const progressBar = document.querySelector('.progress-bar');
+                const progressInterval = setInterval(() => {
+                    if (progress < 90) {
+                        progress += Math.random() * 10;
+                        progressBar.style.width = Math.min(progress, 90) + '%';
+                        progressBar.setAttribute('aria-valuenow', Math.min(progress, 90));
+                    }
+                }, 500);
+                
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    clearInterval(progressInterval);
+                    progressBar.style.width = '100%';
+                    document.getElementById('statusText').textContent = 'Processing complete!';
+                    
+                    if (data.success) {
+                        setTimeout(() => {
+                            window.location.href = '/results/' + data.session_id;
+                        }, 500);
+                    } else {
+                        alert('Error: ' + data.message);
+                        document.getElementById('generateBtn').disabled = false;
+                        document.getElementById('processingStatus').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    clearInterval(progressInterval);
+                    alert('Error: ' + error);
+                    document.getElementById('generateBtn').disabled = false;
+                    document.getElementById('processingStatus').style.display = 'none';
+                });
+            });
+        });
+        
+        function updateThemeIcon(theme) {
+            const themeIcon = document.querySelector('#themeToggle i');
+            if (theme === 'dark') {
+                themeIcon.className = 'bi bi-sun-fill';
+            } else {
+                themeIcon.className = 'bi bi-moon-fill';
+            }
+        }
+    </script>
+</body>
+</html>
