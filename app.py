@@ -40,7 +40,7 @@ app.secret_key = "document_generator_secret_key"
 # Configure upload folder
 UPLOAD_FOLDER = os.path.join("/tmp", "uploads")
 OUTPUT_FOLDER = os.path.join("/tmp", "output")
-TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
+TEMPLATE_FOLDER = os.path.join("/tmp", "templates")
 ALLOWED_EXCEL_EXTENSIONS = {"xlsx", "xls"}
 ALLOWED_TEMPLATE_EXTENSIONS = {"docx"}
 
