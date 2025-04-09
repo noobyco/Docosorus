@@ -504,6 +504,15 @@ with open(index_template_path, "w") as f:
                     method: 'POST',
                     body: formData
                 })
+                .then(async res => {
+                    const contentType = res.headers.get("content-type") || "";
+                if (contentType.includes("application/json")) {
+                    return res.json();
+                } else {
+                    const text = await res.text();
+                    throw new Error(`Unexpected response: ${text}`);
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     clearInterval(progressInterval);
