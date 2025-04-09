@@ -29,8 +29,16 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = "document_generator_secret_key"
 
+
+IS_LOCAL = os.environ.get("VERCEL", "0") != "1"  # Vercel sets VERCEL=1 in prod
+
+if IS_LOCAL:
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+else:
+    UPLOAD_FOLDER = os.path.join("/tmp", "uploads")
+
 # Configure upload folder
-UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+#UPLOAD_FOLDER = os.path.join("/tmp", "uploads")
 OUTPUT_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
 ALLOWED_EXCEL_EXTENSIONS = {"xlsx", "xls"}
