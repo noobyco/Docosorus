@@ -531,6 +531,7 @@ with open(index_template_path, "w") as f:
                 })
                 .catch(error => {
                     clearInterval(progressInterval);
+                    console.error('Error:', error);
                     alert('Error: ' + error);
                     document.getElementById('generateBtn').disabled = false;
                     document.getElementById('processingStatus').style.display = 'none';
